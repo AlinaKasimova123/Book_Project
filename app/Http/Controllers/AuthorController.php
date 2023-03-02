@@ -15,17 +15,17 @@ class AuthorController extends Controller
 
     public function show($id)
     {
-        $authorInfo = User::where('id', $id)->get();
+        $authorInfo = User::find($id);
         return view('authors.show', compact('authorInfo'));
     }
 
     public function update($id)
     {
-        $authorInfo = User::where('id', $id)->get();
+        $authorInfo = User::find($id);
         return view('authors.update', compact('authorInfo'));
     }
 
-    public function saveAuthor($id, Request $request)
+    public function saveAuthor(Request $request, $id)
     {
         $user = User::find($id);
         $user->email = $request->input('email');

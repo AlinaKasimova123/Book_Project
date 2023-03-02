@@ -19,12 +19,6 @@ class CommentController extends Controller
             $comment->book_id = $id;
             $comment->save();
             return redirect(route('oneBook', $id));
-
-            if ($comment) {
-                return redirect(route('allData'))->withErrors([
-                    'formError' => 'Произошла ошибка при создании комментария'
-                ]);
-            }
         } else {
             $comment = new Comment;
             $comment->user_id = 4;

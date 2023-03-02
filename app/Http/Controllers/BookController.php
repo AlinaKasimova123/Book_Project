@@ -59,7 +59,7 @@ class BookController extends Controller
         return view('books.update', compact('bookInfo'));
     }
 
-    public function save($id, Request $request)
+    public function save(Request $request, $id)
     {
         $book = Book::find($id);
         $book->name = $request->input('name');

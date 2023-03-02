@@ -25,50 +25,53 @@ Route::get('/addAuthor', function () {
 })->name('addAuthor');
 
 Route::group([
-    'prefix' => 'books'
+    'prefix' => 'books',
+    'namespace' => 'App\Http\Controllers'
 ], function () {
-    Route::get('/update/{id}','App\Http\Controllers\BookController@update')->name('updateBook')->middleware('auth');;
-    Route::post('/update/{id}','App\Http\Controllers\BookController@save')->name('saveBook')->middleware('auth');
-    Route::get('/delete/{id}','App\Http\Controllers\BookController@delete')->name('deleteBook')->middleware('auth');
-    Route::get('/editOwnBooks/{id}','App\Http\Controllers\BookController@editOwnBooks')->name('editOwnBooks')->middleware('auth');
+    Route::get('/update/{id}','BookController@update')->name('updateBook')->middleware('auth');;
+    Route::post('/update/{id}','BookController@save')->name('saveBook')->middleware('auth');
+    Route::get('/delete/{id}','BookController@delete')->name('deleteBook')->middleware('auth');
+    Route::get('/editOwnBooks/{id}','BookController@editOwnBooks')->name('editOwnBooks')->middleware('auth');
     Route::get('/store', function () {
         return view('store');
     })->name('addNewBook')->middleware('auth');
-    Route::get('/myBooks/{id}','App\Http\Controllers\BookController@myBooks')->name('myBooks')->middleware('auth');
+    Route::get('/myBooks/{id}','BookController@myBooks')->name('myBooks')->middleware('auth');
     Route::get('/store/{id}', function () {
         return view('books.store');
     })->name('addAuthorBook')->middleware('auth');
 
-    Route::post('/store/{id}','App\Http\Controllers\BookController@storeBook')->name('saveAuthorBook')->middleware('auth');
+    Route::post('/store/{id}','BookController@storeBook')->name('saveAuthorBook')->middleware('auth');
 
-    Route::post('/store','App\Http\Controllers\BookController@store')->name('addNewBook')->middleware('auth');
+    Route::post('/store','BookController@store')->name('addNewBook')->middleware('auth');
     Route::get('/show/{id}', function () {
         return view('show');
     })->name('oneBook');
-    Route::get('/show/{id}','App\Http\Controllers\BookController@show')->name('oneBook');
+    Route::get('/show/{id}','BookController@show')->name('oneBook');
 });
 
 Route::group([
-    'prefix' => 'authors'
+    'prefix' => 'authors',
+    'namespace' => 'App\Http\Controllers'
 ], function () {
-    Route::get('/update/{id}','App\Http\Controllers\AuthorController@update')->name('updateAuthor')->middleware('auth');
-    Route::post('/update/{id}','App\Http\Controllers\AuthorController@saveAuthor')->name('saveAuthor')->middleware('auth');
-    Route::get('/delete/{id}','App\Http\Controllers\AuthorController@delete')->name('deleteAuthor')->middleware('auth');
-    Route::post('/addAuthor','App\Http\Controllers\AuthorController@store')->name('saveNewAuthor')->middleware('auth');
-    Route::get('/index','App\Http\Controllers\AuthorController@index')->name('allAuthors');
+    Route::get('/update/{id}','AuthorController@update')->name('updateAuthor')->middleware('auth');
+    Route::post('/update/{id}','AuthorController@saveAuthor')->name('saveAuthor')->middleware('auth');
+    Route::get('/delete/{id}','AuthorController@delete')->name('deleteAuthor')->middleware('auth');
+    Route::post('/addAuthor','AuthorController@store')->name('saveNewAuthor')->middleware('auth');
+    Route::get('/index','AuthorController@index')->name('allAuthors');
     Route::get('/show/{id}', function () {
         return view('show');
     })->name('oneAuthor');
-    Route::get('/show/{id}','App\Http\Controllers\AuthorController@show')->name('oneAuthor');
+    Route::get('/show/{id}','AuthorController@show')->name('oneAuthor');
 });
 
 Route::group([
-    'prefix' => 'comments'
+    'prefix' => 'comments',
+    'namespace' => 'App\Http\Controllers'
 ], function () {
-    Route::get('/update/{book}/comment/{id}','App\Http\Controllers\CommentController@update')->name('updateComment')->middleware('auth');
-    Route::post('/update/{book}/comment/{id}','App\Http\Controllers\CommentController@store')->name('saveComment')->middleware('auth');
-    Route::get('/delete/{book}/comment/{id}','App\Http\Controllers\CommentController@delete')->name('deleteComment')->middleware('auth');
-    Route::post('/show/{id}','App\Http\Controllers\CommentController@save')->name('addComment');
+    Route::get('/update/{book}/comment/{id}','CommentController@update')->name('updateComment')->middleware('auth');
+    Route::post('/update/{book}/comment/{id}','CommentController@store')->name('saveComment')->middleware('auth');
+    Route::get('/delete/{book}/comment/{id}','CommentController@delete')->name('deleteComment')->middleware('auth');
+    Route::post('/show/{id}','CommentController@save')->name('addComment');
 });
 
 Route::get('/store', function () {
