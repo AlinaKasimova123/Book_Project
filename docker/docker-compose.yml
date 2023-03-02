@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+    fpm:
+        build: "fpm"
+        tty: true
+        working_dir: "${CB_MOUNT_PATH}"
+        volumes:
+            - "../:${CB_MOUNT_PATH}:delegated"
+
+    nginx:
+        image: "nginx:stable-alpine"
+        working_dir: "${CB_MOUNT_PATH}"
+        ports:
+            - "80:80"
+        volumes:
+            - "../:${CB_MOUNT_PATH}:delegated"
+            - "./nginx:/etc/nginx/conf.d:ro"
+
+    mysql:
+        image: mysql
+        tty: true
+        working_dir: "${CB_MOUNT_PATH}"
+        ports:
+            - 3307:3307
+        command: [
+            '--character-set-server=utf8mb4',
+            '--collation-server=utf8mb4_unicode_ci'
+        ]
+        volumes:
+            - mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: docker
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: root
+
+    myphpadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        container_name: MyPhpAdminNew
+        restart: always
+        hostname: database
+        links:
+            - mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: test
+            PMA_HOST: mysql
+            TZ: 'Europe/Berlin'
+        ports:
+            - 8087:80
+
+volumes:
+    mysql_data: {}
